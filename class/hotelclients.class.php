@@ -1,7 +1,7 @@
-<?php 
-require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php'; 
- 
-class hotelclients extends Commonobject{ 
+<?php
+require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
+
+class hotelclients extends Commonobject{
 
 	public $errors = array();
 	public $rowid;
@@ -10,7 +10,7 @@ class hotelclients extends Commonobject{
 	public $civilite;
 	public $notes;
 
-	public function __construct(DoliDBMysqli $db){ 
+	public function __construct(DoliDB $db){
 		$this->db = $db;
 		return 1;
 	}
@@ -18,10 +18,10 @@ class hotelclients extends Commonobject{
 	public function getcountclients(){
 		$sql = "SELECT COUNT(rowid) as tot FROM ".MAIN_DB_PREFIX.get_class($this);
 		$resql = $this->db->query($sql);
-		while ($obj = $this->db->fetch_object($resql)) 
+		while ($obj = $this->db->fetch_object($resql))
 		{
 			$tot = $obj->tot;
- 	
+
  		}
 		return $tot;
 	}
@@ -72,7 +72,7 @@ class hotelclients extends Commonobject{
 	        $moreforfilter.=$comboenhancement;
 	        $nodatarole=($comboenhancement?' data-role="none"':'');
 	    }
-	
+
 	    $moreforfilter.='<select class="flat" id="select_'.$id.'" name="'.$name.'" '.$nodatarole.'>';
 	    if ($showempty) $moreforfilter.='<option value="0">&nbsp;</option>';
 
@@ -137,7 +137,7 @@ class hotelclients extends Commonobject{
 			$this->db->rollback();
 			$this->errors[] = 'Error '.get_class($this).' '. $this->db->lasterror();
 			return 0;
-		} 
+		}
 		return $this->db->db->insert_id;
 	}
 
@@ -168,7 +168,7 @@ class hotelclients extends Commonobject{
 			$this->db->rollback();
 			$this->errors[] = 'Error '.get_class($this).' : '. $this->db->lasterror();
 			return -1;
-		} 
+		}
 		return 1;
 	}
 
@@ -177,18 +177,18 @@ class hotelclients extends Commonobject{
 		dol_syslog(__METHOD__, LOG_DEBUG);
 
 		$sql 	= 'DELETE FROM ' . MAIN_DB_PREFIX .get_class($this).' WHERE rowid = ' . $this->rowid;
-		
+
 		// if ($echo_sql) {
 		// 	echo "<br>".$sql."<br>";
 		// }
 
 		$resql 	= $this->db->query($sql);
-		
+
 		if (!$resql) {
 			$this->db->rollback();
 			$this->errors[] = 'Error '.get_class($this).' : '.$this->db->lasterror();
 			return -1;
-		} 
+		}
 		return 1;
 	}
 
@@ -218,7 +218,7 @@ class hotelclients extends Commonobject{
 		if (!empty($filter)) {
 			$sql .= " WHERE 1>0 ".$filter;
 		}
-		
+
 		if (!empty($sortfield)) {
 			$sql .= $this->db->order($sortfield, $sortorder);
 		}
@@ -227,7 +227,7 @@ class hotelclients extends Commonobject{
 			if($offset==1)
 				$sql .= " limit ".$limit;
 			else
-				$sql .= " limit ".$offset.",".$limit;				
+				$sql .= " limit ".$offset.",".$limit;
 		}
 
 		// echo $sql;
@@ -240,7 +240,7 @@ class hotelclients extends Commonobject{
 
 			while ($obj = $this->db->fetch_object($resql)) {
 				$line = new stdClass;
-				$line->rowid 	= $obj->rowid; 
+				$line->rowid 	= $obj->rowid;
 				$line->nom 		=  $obj->nom;
 				$line->cin 		=  $obj->cin;
 				$line->civilite 		=  $obj->civilite;
@@ -268,7 +268,7 @@ class hotelclients extends Commonobject{
 		$resql = $this->db->query($sql);
 		if ($resql) {
 			$numrows = $this->db->num_rows($resql);
-			
+
 			if ($numrows) {
 				$obj 			= $this->db->fetch_object($resql);
 				$this->rowid 	= $obj->rowid;

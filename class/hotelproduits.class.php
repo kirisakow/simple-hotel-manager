@@ -1,5 +1,5 @@
-<?php 
-require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php'; 
+<?php
+require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
 require_once DOL_DOCUMENT_ROOT.'/product/class/product.class.php';
 
 class hotelproduits extends Commonobject{
@@ -31,7 +31,7 @@ class hotelproduits extends Commonobject{
 
 
 
-	public function __construct(DoliDBMysqli $db){ 
+	public function __construct(DoliDB $db){
 		$this->db = $db;
 		return 1;
 	}
@@ -44,11 +44,11 @@ class hotelproduits extends Commonobject{
 
 		$resql = $this->db->query($sql);
 		$option='<select class="" name="supplementee[dddddddddd][label]" onchange="getMntProduct(this)">';
-		if ($resql) 
+		if ($resql)
 		{
 			$option.='<option value="" data-mnt="" data-min-mnt=""></option>';
-			while ($obj = $this->db->fetch_object($resql)) 
-			{	
+			while ($obj = $this->db->fetch_object($resql))
+			{
 				$option.='<option value="'.$obj->rowid.'" data-mnt="'.number_format($obj->price,2).'" data-min-mnt="'.number_format($obj->price_min,2).'">'.$obj->label.'</option>';
  			}
  			$option.='</select>';
@@ -62,10 +62,10 @@ class hotelproduits extends Commonobject{
 
 		$resql = $this->db->query($sql);
 		$option='<select class="h_select_products" name="'.$key.'" onchange="getMntProduct(this)">';
-		if ($resql) 
+		if ($resql)
 		{
 			$option.='<option value="" data-mnt="" data-min-mnt=""></option>';
-			while ($obj = $this->db->fetch_object($resql)) 
+			while ($obj = $this->db->fetch_object($resql))
 			{
 				$slctd = ($obj->rowid == $selected) ? 'selected="selected"' : "";
 				$option.='<option '.$slctd.' value="'.$obj->rowid.'" data-mnt="'.number_format($obj->price,2).'" data-min-mnt="'.number_format($obj->price_min,2).'">'.$obj->label.'</option>';
@@ -127,7 +127,7 @@ class hotelproduits extends Commonobject{
 
 		// echo $sql;
 		// die();
-		
+
 		$resql = $this->db->query($sql);
 
 		if ($echo_sql)
@@ -137,7 +137,7 @@ class hotelproduits extends Commonobject{
 			$this->db->rollback();
 			$this->errors[] = 'Error '.get_class($this).' '. $this->db->lasterror();
 			return 0;
-		} 
+		}
 		return $this->db->db->insert_id;
 	}
 
@@ -165,7 +165,7 @@ class hotelproduits extends Commonobject{
 			$this->db->rollback();
 			$this->errors[] = 'Error '.get_class($this).' : '. $this->db->lasterror();
 			return -1;
-		} 
+		}
 		return 1;
 	}
 
@@ -174,18 +174,18 @@ class hotelproduits extends Commonobject{
 	// 	dol_syslog(__METHOD__, LOG_DEBUG);
 
 	// 	$sql 	= 'DELETE FROM ' . MAIN_DB_PREFIX.'product WHERE rowid = ' . $this->rowid;
-		
+
 	// 	if ($echo_sql) {
 	// 		echo "<br>".$sql."<br>";
 	// 	}
 
 	// 	$resql 	= $this->db->query($sql);
-		
+
 	// 	if (!$resql) {
 	// 		$this->db->rollback();
 	// 		$this->errors[] = 'Error '.get_class($this).' : '.$this->db->lasterror();
 	// 		return -1;
-	// 	} 
+	// 	}
 	// 	return 1;
 	// }
 
@@ -198,7 +198,7 @@ class hotelproduits extends Commonobject{
 		if (!empty($filter)) {
 			$sql .= " WHERE 1>0 ".$filter;
 		}
-		
+
 		if (!empty($sortfield)) {
 			$sql .= $this->db->order($sortfield, $sortorder);
 		}
@@ -207,7 +207,7 @@ class hotelproduits extends Commonobject{
 			if($offset==1)
 				$sql .= " limit ".$limit;
 			else
-				$sql .= " limit ".$offset.",".$limit;				
+				$sql .= " limit ".$offset.",".$limit;
 		}
 
 		echo $sql;
@@ -266,7 +266,7 @@ class hotelproduits extends Commonobject{
 		$resql = $this->db->query($sql);
 		if ($resql) {
 			$numrows = $this->db->num_rows($resql);
-			
+
 			if ($numrows) {
 				$obj 			= $this->db->fetch_object($resql);
 				$this->rowid 	= $obj->rowid;

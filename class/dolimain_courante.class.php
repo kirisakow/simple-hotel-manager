@@ -1,17 +1,17 @@
-<?php 
-require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php'; 
+<?php
+require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
 
 dol_include_once('/bookinghotel/class/bookinghotel.class.php');
 require_once DOL_DOCUMENT_ROOT.'/compta/facture/class/facture.class.php';
 require_once DOL_DOCUMENT_ROOT . '/compta/paiement/class/paiement.class.php';
 
-class dolimain_courante extends Commonobject{ 
+class dolimain_courante extends Commonobject{
 
 	public $element='bookinghotel';
 	public $table_element='bookinghotel';
 
-	
-	public function __construct(DoliDBMysqli $db){ 
+
+	public function __construct(DoliDB $db){
 		$this->db = $db;
 		return 1;
     }
@@ -57,7 +57,7 @@ class dolimain_courante extends Commonobject{
                 $line->rowid    = $obj->rowid;
                 $line->chambre  =  $obj->chambre;
                 $line->client   =  $obj->client;
-                $line->reservation_etat     =  $obj->reservation_etat; 
+                $line->reservation_etat     =  $obj->reservation_etat;
                 $line->ref          =  $obj->ref;
                 $line->fk_facture          =  $obj->fk_facture;
 
@@ -69,7 +69,7 @@ class dolimain_courante extends Commonobject{
                 if(!empty($obj->fk_facture)){
 
                     $facture->fetch($obj->fk_facture);
-                    
+
                     $line->facture      =  $facture->total_ttc;
                     $line->reglemjour   =  $this->PaiementFactureJour($facture, $jour);
                     $line->restepaye   =  $this->ResteaPaiementFacture($facture);
@@ -204,7 +204,7 @@ class dolimain_courante extends Commonobject{
         return $somm;
     }
 
-} 
+}
 
 
 ?>

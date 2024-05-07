@@ -12,7 +12,7 @@ class hotelchambres extends Commonobject{
 	public $label;
 	public $chambre_category;
 
-	public function __construct(DoliDBMysqli $db){ 
+	public function __construct(DoliDB $db){ 
 		$this->db = $db;
 		return 1;
 	}

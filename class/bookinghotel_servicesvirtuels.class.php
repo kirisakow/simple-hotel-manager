@@ -11,7 +11,7 @@ class bookinghotel_servicesvirtuels extends Commonobject{
 	public $notes;
 	public $entity;
 
-	public function __construct(DoliDBMysqli $db){ 
+	public function __construct(DoliDB $db){ 
 		$this->db = $db;
 		return 1;
 	}

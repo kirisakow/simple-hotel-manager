@@ -1,5 +1,5 @@
-<?php 
-require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php'; 
+<?php
+require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
 require_once DOL_DOCUMENT_ROOT.'/categories/class/categorie.class.php';
 
 class hotelchambres_category extends Commonobject{
@@ -9,7 +9,7 @@ class hotelchambres_category extends Commonobject{
 	public $label;
 	public $ref;
 
-	public function __construct(DoliDBMysqli $db){ 
+	public function __construct(DoliDB $db){
 		$this->db = $db;
 		return 1;
 	}
@@ -35,7 +35,7 @@ class hotelchambres_category extends Commonobject{
 		$c_category     = new Categorie($db);
     	$type = "product";
     	$type = 0;
-    	// if (! is_numeric($type)) 
+    	// if (! is_numeric($type))
     	// 	$type = $c_category->MAP_ID[$type];
 
     	$sql = "SELECT DISTINCT c.rowid, c.label, c.color, c.fk_parent";
@@ -76,7 +76,7 @@ class hotelchambres_category extends Commonobject{
 			$sql .= " WHERE 1>0 ".$filter;
 		}
 		// $sql .= " AND fk_product_type = 1";
-		
+
 		if (!empty($sortfield)) {
 			$sql .= $this->db->order($sortfield, $sortorder);
 		}
@@ -85,7 +85,7 @@ class hotelchambres_category extends Commonobject{
 			if($offset==1)
 				$sql .= " limit ".$limit;
 			else
-				$sql .= " limit ".$offset.",".$limit;				
+				$sql .= " limit ".$offset.",".$limit;
 		}
 		// echo $sql;
 		// die();
@@ -98,7 +98,7 @@ class hotelchambres_category extends Commonobject{
 
 			while ($obj = $this->db->fetch_object($resql)) {
 				$line = new stdClass;
-				$line->rowid 	= $obj->rowid; 
+				$line->rowid 	= $obj->rowid;
 				$line->ref 		=  $obj->ref;
 				$line->label 	=  $obj->label;
 				$this->rows[] 	= $line;
@@ -123,11 +123,11 @@ class hotelchambres_category extends Commonobject{
 		$resql = $this->db->query($sql);
 		if ($resql) {
 			$numrows = $this->db->num_rows($resql);
-			
+
 			if ($numrows) {
 				$obj 			= $this->db->fetch_object($resql);
 				$this->fk_categorie 	= $obj->fk_categorie;
-				$this->label 	=  $obj->label; 
+				$this->label 	=  $obj->label;
 				$this->ref 		=  $obj->ref;
 			}
 

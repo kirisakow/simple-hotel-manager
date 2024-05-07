@@ -1,9 +1,9 @@
-<?php 
-require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php'; 
+<?php
+require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
 require_once DOL_DOCUMENT_ROOT.'/product/class/product.class.php';
 require_once DOL_DOCUMENT_ROOT.'/compta/facture/class/facture.class.php';
 
-class hotelfacturedet extends Commonobject{ 
+class hotelfacturedet extends Commonobject{
 
 	public $errors = array();
 	public $rowid; // auto
@@ -31,21 +31,21 @@ class hotelfacturedet extends Commonobject{
 	public $fk_multicurrency; // 0
 	public $multicurrency_code; // EUR
 
-	public function __construct(DoliDBMysqli $db){ 
+	public function __construct(DoliDB $db){
 		$this->db = $db;
 		return 1;
 	}
 
 	public function getIdFacture($resid){
-		
+
 		$sql = "SELECT rowid as facid FROM ".MAIN_DB_PREFIX."facture ";
 		$sql .= "where bookinghotelid = ".$resid;
-		
+
 		$resql = $this->db->query($sql);
-		while ($obj = $this->db->fetch_object($resql)) 
+		while ($obj = $this->db->fetch_object($resql))
 		{
 			$facid = $obj->facid;
- 	
+
  		}
 		return $facid;
 	}
@@ -53,10 +53,10 @@ class hotelfacturedet extends Commonobject{
 	public function getMaxRangFacturedet(){
 		$sql = "SELECT MAX(rang) as max FROM ".MAIN_DB_PREFIX."facturedet";
 		$resql = $this->db->query($sql);
-		while ($obj = $this->db->fetch_object($resql)) 
+		while ($obj = $this->db->fetch_object($resql))
 		{
 			$max = $obj->max;
- 	
+
  		}
 		return $max;
 	}
@@ -85,7 +85,7 @@ class hotelfacturedet extends Commonobject{
 			$this->db->rollback();
 			$this->errors[] = 'Error '.get_class($this).' '. $this->db->lasterror();
 			return 0;
-		} 
+		}
 		return $this->db->db->insert_id;
 	}
 
@@ -116,7 +116,7 @@ class hotelfacturedet extends Commonobject{
 			$this->db->rollback();
 			$this->errors[] = 'Error '.get_class($this).' : '. $this->db->lasterror();
 			return -1;
-		} 
+		}
 		return 1;
 	}
 
@@ -125,18 +125,18 @@ class hotelfacturedet extends Commonobject{
 	// 	dol_syslog(__METHOD__, LOG_DEBUG);
 
 	// 	$sql 	= 'DELETE FROM ' . MAIN_DB_PREFIX .get_class($this).' WHERE rowid = ' . $this->rowid;
-		
+
 	// 	if ($echo_sql) {
 	// 		echo "<br>".$sql."<br>";
 	// 	}
 
 	// 	$resql 	= $this->db->query($sql);
-		
+
 	// 	if (!$resql) {
 	// 		$this->db->rollback();
 	// 		$this->errors[] = 'Error '.get_class($this).' : '.$this->db->lasterror();
 	// 		return -1;
-	// 	} 
+	// 	}
 	// 	return 1;
 	// }
 
@@ -151,7 +151,7 @@ class hotelfacturedet extends Commonobject{
 		if (!empty($filter)) {
 			$sql .= " WHERE 1>0 ".$filter;
 		}
-		
+
 		if (!empty($sortfield)) {
 			$sql .= $this->db->order($sortfield, $sortorder);
 		}
@@ -160,7 +160,7 @@ class hotelfacturedet extends Commonobject{
 			if($offset==1)
 				$sql .= " limit ".$limit;
 			else
-				$sql .= " limit ".$offset.",".$limit;				
+				$sql .= " limit ".$offset.",".$limit;
 		}
 
 		echo $sql;
@@ -225,7 +225,7 @@ class hotelfacturedet extends Commonobject{
 		$resql = $this->db->query($sql);
 		if ($resql) {
 			$numrows = $this->db->num_rows($resql);
-			
+
 			if ($numrows) {
 				$obj 			= $this->db->fetch_object($resql);
 				$this->$rowid 	= $rowid; // auto

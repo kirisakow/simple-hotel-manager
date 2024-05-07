@@ -16,7 +16,7 @@ class bookinghotel_repas extends Commonobject{
 	public $lieu_m;
 	public $lieu_s;
 
-	public function __construct(DoliDBMysqli $db){ 
+	public function __construct(DoliDB $db){ 
 		$this->db = $db;
 		return 1;
 	}

@@ -1,6 +1,6 @@
-<?php 
+<?php
 // require '../../main.inc.php';
-require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php'; 
+require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
 require_once DOL_DOCUMENT_ROOT.'/product/class/product.class.php';
 require_once DOL_DOCUMENT_ROOT . '/comm/propal/class/propal.class.php';
 require_once DOL_DOCUMENT_ROOT.'/compta/facture/class/facture.class.php';
@@ -9,7 +9,7 @@ require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 dol_include_once('/bookinghotel/class/bookinghotel.class.php');
 
 
-class hotelfactures extends Commonobject{ 
+class hotelfactures extends Commonobject{
 
 	public $errors = array();
 	public $rowid; // auto
@@ -30,7 +30,7 @@ class hotelfactures extends Commonobject{
 	public $multicurrency_code; // EUR
 	public $bookinghotelid; // Reservation ID
 
-	public function __construct(DoliDBMysqli $db){ 
+	public function __construct(DoliDB $db){
 		$this->db = $db;
 		return 1;
 	}
@@ -62,7 +62,7 @@ class hotelfactures extends Commonobject{
 			$paiement->paiementid   = $reserv->modpaiement;
 			if (!$error)
 			{
-				$paiement_id = $paiement->create($user,  0, $thirdparty); 
+				$paiement_id = $paiement->create($user,  0, $thirdparty);
 				// This include closing invoices and regenerating documents
 				if ($paiement_id < 0)
 				{
@@ -80,7 +80,7 @@ class hotelfactures extends Commonobject{
 			}
         }
 	}
-	
+
 	public function createTheFacture($reservation_id){
 
 		global $conf, $user, $hookmanager;
@@ -145,7 +145,7 @@ class hotelfactures extends Commonobject{
                 'fk_facture'  =>  $id, // fk_facture
             );
             $bookinghotel->update($reserv->rowid, $data);
-		
+
             $allchambres = explode(",", $reserv->chambre);
 
 			$fk_parent_line=0;
@@ -311,7 +311,7 @@ class hotelfactures extends Commonobject{
 
 		$factStand = 0;
 		$resql = $this->db->query($sql);
-		while ($obj = $this->db->fetch_object($resql)) 
+		while ($obj = $this->db->fetch_object($resql))
 		{
 			$this->fetch($obj->fk_target);
 			if ($this->type == 0){
@@ -359,7 +359,7 @@ class hotelfactures extends Commonobject{
 			    }
 				return $factStand;
 			}
- 	
+
  		}
 		return $factStand;
 	}
@@ -367,10 +367,10 @@ class hotelfactures extends Commonobject{
 	public function getMaxIdFacture(){
 		$sql = "SELECT MAX(rowid) as max FROM ".MAIN_DB_PREFIX."facture";
 		$resql = $this->db->query($sql);
-		while ($obj = $this->db->fetch_object($resql)) 
+		while ($obj = $this->db->fetch_object($resql))
 		{
 			$max = $obj->max;
- 	
+
  		}
 		return $max;
 	}
@@ -399,7 +399,7 @@ class hotelfactures extends Commonobject{
 			$this->db->rollback();
 			$this->errors[] = 'Error '.get_class($this).' '. $this->db->lasterror();
 			return 0;
-		} 
+		}
 		return $this->db->db->insert_id;
 	}
 
@@ -428,7 +428,7 @@ class hotelfactures extends Commonobject{
 			$this->db->rollback();
 			$this->errors[] = 'Error '.get_class($this).' : '. $this->db->lasterror();
 			return -1;
-		} 
+		}
 		return 1;
 	}
 
@@ -437,18 +437,18 @@ class hotelfactures extends Commonobject{
 	// 	dol_syslog(__METHOD__, LOG_DEBUG);
 
 	// 	$sql 	= 'DELETE FROM ' . MAIN_DB_PREFIX .get_class($this).' WHERE rowid = ' . $this->rowid;
-		
+
 	// 	if ($echo_sql) {
 	// 		echo "<br>".$sql."<br>";
 	// 	}
 
 	// 	$resql 	= $this->db->query($sql);
-		
+
 	// 	if (!$resql) {
 	// 		$this->db->rollback();
 	// 		$this->errors[] = 'Error '.get_class($this).' : '.$this->db->lasterror();
 	// 		return -1;
-	// 	} 
+	// 	}
 	// 	return 1;
 	// }
 
@@ -465,7 +465,7 @@ class hotelfactures extends Commonobject{
 		if (!empty($filter)) {
 			$sql .= " ".$filter;
 		}
-		
+
 		if (!empty($sortfield)) {
 			$sql .= $this->db->order($sortfield, $sortorder);
 		}
@@ -474,7 +474,7 @@ class hotelfactures extends Commonobject{
 			if($offset==1)
 				$sql .= " limit ".$limit;
 			else
-				$sql .= " limit ".$offset.",".$limit;				
+				$sql .= " limit ".$offset.",".$limit;
 		}
 
 		$this->rows = array();
@@ -525,7 +525,7 @@ class hotelfactures extends Commonobject{
 		$resql = $this->db->query($sql);
 		if ($resql) {
 			$numrows = $this->db->num_rows($resql);
-			
+
 			if ($numrows) {
 				$obj 			= $this->db->fetch_object($resql);
 				$this->rowid 	= $obj->rowid;

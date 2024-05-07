@@ -1,7 +1,7 @@
-<?php 
-require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php'; 
- 
-class bookinghotel_historique extends Commonobject{ 
+<?php
+require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
+
+class bookinghotel_historique extends Commonobject{
 
 	public $errors = array();
 	public $rowid;
@@ -21,7 +21,7 @@ class bookinghotel_historique extends Commonobject{
 	public $acompte;
 	public $supplementfacturer;
 
-	public function __construct(DoliDBMysqli $db){ 
+	public function __construct(DoliDB $db){
 		$this->db = $db;
 		return 1;
 	}
@@ -67,7 +67,7 @@ class bookinghotel_historique extends Commonobject{
 			$this->db->rollback();
 			$this->errors[] = 'Error '.get_class($this).' '. $this->db->lasterror();
 			return 0;
-		} 
+		}
 		return $this->db->db->insert_id;
 	}
 
@@ -98,7 +98,7 @@ class bookinghotel_historique extends Commonobject{
 			$this->db->rollback();
 			$this->errors[] = 'Error '.get_class($this).' : '. $this->db->lasterror();
 			return -1;
-		} 
+		}
 		return 1;
 	}
 
@@ -107,18 +107,18 @@ class bookinghotel_historique extends Commonobject{
 		dol_syslog(__METHOD__, LOG_DEBUG);
 
 		$sql 	= 'DELETE FROM ' . MAIN_DB_PREFIX .get_class($this).' WHERE rowid = ' . $this->rowid;
-		
+
 		// if ($echo_sql) {
 		// 	echo "<br>".$sql."<br>";
 		// }
 
 		$resql 	= $this->db->query($sql);
-		
+
 		if (!$resql) {
 			$this->db->rollback();
 			$this->errors[] = 'Error '.get_class($this).' : '.$this->db->lasterror();
 			return -1;
-		} 
+		}
 		return 1;
 	}
 
@@ -180,7 +180,7 @@ class bookinghotel_historique extends Commonobject{
 		if (!empty($filter)) {
 			$sql .= " WHERE 1>0 ".$filter;
 		}
-		
+
 		if (!empty($sortfield)) {
 			$sql .= $this->db->order($sortfield, $sortorder);
 		}
@@ -189,7 +189,7 @@ class bookinghotel_historique extends Commonobject{
 			if($offset==1)
 				$sql .= " limit ".$limit;
 			else
-				$sql .= " limit ".$offset.",".$limit;				
+				$sql .= " limit ".$offset.",".$limit;
 		}
 
 		// echo $sql;
@@ -203,23 +203,23 @@ class bookinghotel_historique extends Commonobject{
 
 			while ($obj = $this->db->fetch_object($resql)) {
 				$line = new stdClass;
-				$line->rowid 	= $obj->rowid; 
+				$line->rowid 	= $obj->rowid;
 				$line->reservation_id 	=  $obj->reservation_id;
 				$line->created_at 	=  $obj->created_at;
 				$line->action 	=  $obj->action;
 				$line->user 	=  $obj->user;
 				$line->chambre 	=  $obj->chambre;
-				$line->client 	=  $obj->client; 
-				$line->notes 	=  $obj->notes; 
-				$line->reservation_etat 	=  $obj->reservation_etat; 
-				$line->prix 	=  $obj->prix; 
+				$line->client 	=  $obj->client;
+				$line->notes 	=  $obj->notes;
+				$line->reservation_etat 	=  $obj->reservation_etat;
+				$line->prix 	=  $obj->prix;
 				$line->debut 	=  $obj->debut;
 				$line->fin 		=  $obj->fin;
-				$line->chambre_category =  $obj->chambre_category; 
-				$line->to_centrale =  $obj->to_centrale; 
-				$line->mode_reglement =  $obj->mode_reglement; 
-				$line->acompte =  $obj->acompte; 
-				$line->supplementfacturer =  $obj->supplementfacturer; 
+				$line->chambre_category =  $obj->chambre_category;
+				$line->to_centrale =  $obj->to_centrale;
+				$line->mode_reglement =  $obj->mode_reglement;
+				$line->acompte =  $obj->acompte;
+				$line->supplementfacturer =  $obj->supplementfacturer;
 				$this->rows[] 	= $line;
 			}
 			$this->db->free($resql);
@@ -244,7 +244,7 @@ class bookinghotel_historique extends Commonobject{
 		$resql = $this->db->query($sql);
 		if ($resql) {
 			$numrows = $this->db->num_rows($resql);
-			
+
 			if ($numrows) {
 				$obj 			= $this->db->fetch_object($resql);
 				$this->rowid 	= $obj->rowid;
@@ -253,10 +253,10 @@ class bookinghotel_historique extends Commonobject{
 				$this->action 	=  $obj->action;
 				$this->user 	=  $obj->user;
 				$this->chambre 	=  $obj->chambre;
-				$this->client 	=  $obj->client; 
-				$this->reservation_etat 	=  $obj->reservation_etat; 
-				$this->notes 	=  $obj->notes; 
-				$this->prix 	=  $obj->prix; 
+				$this->client 	=  $obj->client;
+				$this->reservation_etat 	=  $obj->reservation_etat;
+				$this->notes 	=  $obj->notes;
+				$this->prix 	=  $obj->prix;
 				$this->debut 	=  $obj->debut;
 				$this->fin 	=  $obj->fin;
 				$this->chambre_category 	=  $obj->chambre_category;
@@ -285,10 +285,10 @@ class bookinghotel_historique extends Commonobject{
 		$sql = "SELECT supplementfacturer FROM ".MAIN_DB_PREFIX.get_class($this) ." where rowid = ".$id;
 		// echo $sql;
 		$resql = $this->db->query($sql);
-		while ($obj = $this->db->fetch_object($resql)) 
+		while ($obj = $this->db->fetch_object($resql))
 		{
 			$prod = unserialize($obj->supplementfacturer);
- 	
+
  		}
 		return $prod;
 	}
@@ -328,7 +328,7 @@ class bookinghotel_historique extends Commonobject{
 	    $moreforfilter.='<style>#s2id_select_'.$name.'{ width: 100% !important;}</style>';
 	    return $moreforfilter;
 	}
-} 
+}
 
 
 ?>

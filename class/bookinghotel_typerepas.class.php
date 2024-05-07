@@ -1,6 +1,6 @@
-<?php 
-require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php'; 
- 
+<?php
+require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
+
 class bookinghotel_typerepas extends Commonobject{
 
 	public $errors = array();
@@ -8,7 +8,7 @@ class bookinghotel_typerepas extends Commonobject{
 	public $label;
 	public $notes;
 
-	public function __construct(DoliDBMysqli $db){ 
+	public function __construct(DoliDB $db){
 		$this->db = $db;
 		return 1;
 	}
@@ -73,7 +73,7 @@ class bookinghotel_typerepas extends Commonobject{
 			$this->db->rollback();
 			$this->errors[] = 'Error '.get_class($this).' '. $this->db->lasterror();
 			return 0;
-		} 
+		}
 		return $this->db->db->insert_id;
 	}
 
@@ -104,7 +104,7 @@ class bookinghotel_typerepas extends Commonobject{
 			$this->db->rollback();
 			$this->errors[] = 'Error '.get_class($this).' : '. $this->db->lasterror();
 			return -1;
-		} 
+		}
 		return 1;
 	}
 
@@ -113,18 +113,18 @@ class bookinghotel_typerepas extends Commonobject{
 		dol_syslog(__METHOD__, LOG_DEBUG);
 
 		$sql 	= 'DELETE FROM ' . MAIN_DB_PREFIX .get_class($this).' WHERE rowid = ' . $this->rowid;
-		
+
 		// if ($echo_sql) {
 		// 	echo "<br>".$sql."<br>";
 		// }
 
 		$resql 	= $this->db->query($sql);
-		
+
 		if (!$resql) {
 			$this->db->rollback();
 			$this->errors[] = 'Error '.get_class($this).' : '.$this->db->lasterror();
 			return -1;
-		} 
+		}
 		return 1;
 	}
 
@@ -153,7 +153,7 @@ class bookinghotel_typerepas extends Commonobject{
 		if (!empty($filter)) {
 			$sql .= " WHERE 1>0 ".$filter;
 		}
-		
+
 		if (!empty($sortfield)) {
 			$sql .= $this->db->order($sortfield, $sortorder);
 		}
@@ -162,7 +162,7 @@ class bookinghotel_typerepas extends Commonobject{
 			if($offset==1)
 				$sql .= " limit ".$limit;
 			else
-				$sql .= " limit ".$offset.",".$limit;				
+				$sql .= " limit ".$offset.",".$limit;
 		}
 
 		// echo $sql;
@@ -175,7 +175,7 @@ class bookinghotel_typerepas extends Commonobject{
 
 			while ($obj = $this->db->fetch_object($resql)) {
 				$line = new stdClass;
-				$line->rowid 	= $obj->rowid; 
+				$line->rowid 	= $obj->rowid;
 				$line->label 	=  $obj->label;
 				$line->notes 	=  $obj->notes;
 				$this->rows[] 	= $line;
@@ -200,11 +200,11 @@ class bookinghotel_typerepas extends Commonobject{
 		$resql = $this->db->query($sql);
 		if ($resql) {
 			$numrows = $this->db->num_rows($resql);
-			
+
 			if ($numrows) {
 				$obj 			= $this->db->fetch_object($resql);
 				$this->rowid 	= $obj->rowid;
-				$this->label 	=  $obj->label; 
+				$this->label 	=  $obj->label;
 				$this->notes 	=  $obj->notes;
 			}
 
