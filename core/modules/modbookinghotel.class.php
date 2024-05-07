@@ -57,7 +57,6 @@ class modbookinghotel extends DolibarrModules
 		$this->description = "DescriptionMod1909671880";
 		$this->version = '2.0';
 		$this->const_name = 'MAIN_MODULE_'.strtoupper($this->name);
-		$this->special = 0;
 		$this->picto = 'bookinghotel@bookinghotel';
 
 		$this->module_parts = array(
